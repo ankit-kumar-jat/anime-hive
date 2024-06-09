@@ -8,6 +8,8 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 import stylesheet from "~/assets/styles/tailwind.css?url";
 
+import { ProgressBar } from "~/components/progress-bar";
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -31,5 +33,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <ProgressBar />
+    </>
+  );
 }
