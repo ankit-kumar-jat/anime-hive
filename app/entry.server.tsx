@@ -12,7 +12,13 @@ import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 
+import { getEnv, init } from "~/lib/env.server";
+import { makeTimings } from "~/lib/timing.server";
+
 const ABORT_DELAY = 5_000;
+
+init();
+global.ENV = getEnv();
 
 export default function handleRequest(
   request: Request,
@@ -47,6 +53,7 @@ function handleBotRequest(
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
+    const timings = makeTimings("render", "renderToPipeableStream");
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer
         context={remixContext}
@@ -60,6 +67,7 @@ function handleBotRequest(
           const stream = createReadableStreamFromReadable(body);
 
           responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.append("Server-Timing", timings.toString());
 
           resolve(
             new Response(stream, {
@@ -97,6 +105,7 @@ function handleBrowserRequest(
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
+    const timings = makeTimings("render", "renderToPipeableStream");
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer
         context={remixContext}
@@ -110,6 +119,7 @@ function handleBrowserRequest(
           const stream = createReadableStreamFromReadable(body);
 
           responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.append("Server-Timing", timings.toString());
 
           resolve(
             new Response(stream, {

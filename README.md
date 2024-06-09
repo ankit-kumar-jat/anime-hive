@@ -1,4 +1,4 @@
-# Welcome to Remix!
+# Welcome to Anime Hive!
 
 - 📖 [Remix docs](https://remix.run/docs)
 
@@ -34,3 +34,7 @@ Make sure to deploy the output of `npm run build`
 
 - `build/server`
 - `build/client`
+
+## Todos
+
+- add nonce and CSP (content security policy)
