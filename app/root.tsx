@@ -5,7 +5,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import stylesheet from "~/assets/styles/tailwind.css?url";
 
 import { ProgressBar } from "~/components/progress-bar";
@@ -13,6 +13,17 @@ import { ProgressBar } from "~/components/progress-bar";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Home | Anime Hive" },
+    {
+      name: "description",
+      content:
+        "One stop solution to help you find anime or manga. - Anime Hive",
+    },
+  ];
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
