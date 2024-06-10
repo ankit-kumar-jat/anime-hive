@@ -1,4 +1,15 @@
-import { PagingOptions, RelationType, ResponsePaging } from ".";
+import {
+  AlternativeTitles,
+  AnimeNsfwState,
+  Genre,
+  PagingOptions,
+  Picture,
+  Related,
+  RelationType,
+  ResponsePaging,
+  MangaBase,
+  Recommendation,
+} from ".";
 
 export type AnimeMediaType =
   | "tv"
@@ -8,11 +19,6 @@ export type AnimeMediaType =
   | "ona"
   | "music"
   | "unknown";
-
-export type AnimeNsfwState =
-  | "white" // This work is safe for work
-  | "gray" // This work may be not safe for work
-  | "black"; // This work is not safe for work
 
 export type AnimeStatus =
   | "finished_airing"
@@ -61,25 +67,9 @@ export type AnimeRankingType =
   | "bypopularity" //	Top Anime by Popularity
   | "favorite"; //	Top Favorited Anime
 
-export type AlternativeTitles = {
-  en: string;
-  ja: string;
-  synonyms: Array<string>;
-};
-
 export type AnimeBroadcast = {
   day_of_the_week: string; // A lower-cased string of the day that the media is released in a week. E.g. thursday
   start_time?: string; // The time of the broadcast. E.g. 19:30
-};
-
-export type Genre = {
-  id: number;
-  name: string;
-};
-
-export type Picture = {
-  large?: string; // An absulute URL to the high(er) resolution picture
-  medium: string; // An absulute URL to the medium resolution picture
 };
 
 export type AnimeSeason = {
@@ -90,17 +80,6 @@ export type AnimeSeason = {
 export type AnimeStudio = {
   id: number;
   name: string;
-};
-
-export type AnimeRecommendation = {
-  node: Anime;
-  num_recommendations: numbers;
-};
-
-export type RelatedAnime = {
-  node: Anime;
-  relation_type: RelationType;
-  relation_type_formatted: string;
 };
 
 export type RelatedManga = {
@@ -157,12 +136,13 @@ export type AnimeInList = AnimeBase & {
   studios: AnimeStudio[];
 };
 
-export type AnimeFieldInList = keyof AnimeInList;
+export type AnimeInListField = keyof AnimeInList;
 
 export type Anime = AnimeInList & {
   pictures: Picture[];
-  related_anime: RelatedAnime[];
-  recommendations: AnimeRecommendation[];
+  related_anime: Related<AnimeBase>[];
+  related_manga: Related<MangaBase>[];
+  recommendations: Recommendation<AnimeBase>[];
   statistics: AnimeStatistics | null;
 };
 
@@ -173,7 +153,7 @@ export type GetAnimeSearchResultsOptions<T> = PagingOptions & {
   fields?: T[];
 };
 
-export type GetAnimeSearchResultsResponse<K extends AnimeFieldInList[]> = {
+export type GetAnimeSearchResultsResponse<K extends AnimeInListField[]> = {
   data: {
     node: AnimeBase & Pick<AnimeInList, K[number]>;
   }[];
@@ -185,7 +165,7 @@ export type GetAnimeByRankingOptions<T> = PagingOptions & {
   fields?: T[];
 };
 
-export type GetAnimeByRankingResponse<K extends AnimeFieldInList[]> = {
+export type GetAnimeByRankingResponse<K extends AnimeInListField[]> = {
   data: {
     node: AnimeBase & Pick<AnimeInList, K[number]>;
     ranking: Ranking;
@@ -200,7 +180,7 @@ export type GetAnimeBySeasonOptions<T> = PagingOptions & {
   fields?: T[];
 };
 
-export type GetAnimeBySeasonResponse<K extends AnimeFieldInList[]> = {
+export type GetAnimeBySeasonResponse<K extends AnimeInListField[]> = {
   data: {
     node: AnimeBase & Pick<AnimeInList, K[number]>;
   }[];

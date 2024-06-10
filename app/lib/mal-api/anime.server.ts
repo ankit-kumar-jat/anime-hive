@@ -3,7 +3,7 @@ import { cachified, cache } from "~/lib/cache.server";
 import { apiClient } from "./api-client.server";
 import {
   AnimeField,
-  AnimeFieldInList,
+  AnimeInListField,
   GetAnimeByRankingOptions,
   GetAnimeByRankingResponse,
   GetAnimeBySeasonOptions,
@@ -17,7 +17,7 @@ import {
 // Get Anime Search Results
 // ============================================================================
 
-function getAnimeSearchResultsCacheKey<T extends AnimeFieldInList>({
+function getAnimeSearchResultsCacheKey<T extends AnimeInListField>({
   q,
   limit,
   offset,
@@ -28,7 +28,7 @@ function getAnimeSearchResultsCacheKey<T extends AnimeFieldInList>({
   return keyArray.join("::");
 }
 
-export function getAnimeSearchResults<T extends AnimeFieldInList>({
+export function getAnimeSearchResults<T extends AnimeInListField>({
   timings,
   q,
   limit = 50,
@@ -71,7 +71,7 @@ export function getAnimeSearchResults<T extends AnimeFieldInList>({
 // Get Anime By Ranking
 // ============================================================================
 
-function getAnimeByRankingCacheKey<T extends AnimeFieldInList>({
+function getAnimeByRankingCacheKey<T extends AnimeInListField>({
   ranking_type,
   limit,
   offset,
@@ -82,7 +82,7 @@ function getAnimeByRankingCacheKey<T extends AnimeFieldInList>({
   return keyArray.join("::");
 }
 
-export function GetAnimeByRanking<T extends AnimeFieldInList>({
+export function GetAnimeByRanking<T extends AnimeInListField>({
   timings,
   ranking_type,
   limit = 50,
@@ -125,7 +125,7 @@ export function GetAnimeByRanking<T extends AnimeFieldInList>({
 // Get Anime By Season
 // ============================================================================
 
-function getAnimeBySeasonCacheKey<T extends AnimeFieldInList>({
+function getAnimeBySeasonCacheKey<T extends AnimeInListField>({
   season,
   year,
   limit,
@@ -139,7 +139,7 @@ function getAnimeBySeasonCacheKey<T extends AnimeFieldInList>({
   return keyArray.join("::");
 }
 
-export function GetAnimeBySeason<T extends AnimeFieldInList>({
+export function GetAnimeBySeason<T extends AnimeInListField>({
   timings,
   season,
   year,
