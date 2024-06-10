@@ -3,6 +3,7 @@ import { z } from "zod";
 const schema = z.object({
   NODE_ENV: z.enum(["production", "development", "test"] as const),
   MAL_API_KEY: z.string(),
+  MAL_API_URL: z.string(),
   CACHE_DATABASE_PATH: z.string(),
 });
 
