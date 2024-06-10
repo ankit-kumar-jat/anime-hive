@@ -9,6 +9,8 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import stylesheet from "~/assets/styles/tailwind.css?url";
 
 import { ProgressBar } from "~/components/progress-bar";
+import Header from "~/components/header";
+import Footer from "~/components/footer";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -34,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-background text-foreground">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -46,7 +48,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
-      <Outlet />
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <div>
+          <Outlet />
+        </div>
+        <Footer />
+      </div>
       <ProgressBar />
     </>
   );
