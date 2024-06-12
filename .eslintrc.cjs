@@ -26,6 +26,7 @@ module.exports = {
 
   overrides: [
     // React
+
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
       plugins: ["react", "jsx-a11y"],
@@ -47,6 +48,9 @@ module.exports = {
         "import/resolver": {
           typescript: {},
         },
+      },
+      rules: {
+        "react/prop-types": "off",
       },
     },
 
